@@ -1,4 +1,4 @@
-# Task 2: Syncing a fork
+# Task 2: [git] Syncing a fork
 
 *prerequisites*: [Task 1](../task-01)
 
