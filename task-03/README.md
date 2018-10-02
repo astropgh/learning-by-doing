@@ -17,6 +17,14 @@ file **once**.
 2. Submit a pull request for your solution.
 
 
+## Extension
+
+Does your function yield the starting line and ending line themselves, or just the lines in between? 
+What if we want to have the options to include the starting/ending lines? 
+Can you add two optional arguments `include_start` and `include_end` to `extract_data_lines` to 
+control its behavior? 
+
+
 ## Background
 
 The `yield` statement in Python turns a regular function to a generator,
