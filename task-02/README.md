@@ -16,8 +16,7 @@
 - https://help.github.com/articles/configuring-a-remote-for-a-fork/
 - https://help.github.com/articles/syncing-a-fork/
 
-## Food for thoughts
+## Food for thought
 - What's the difference between a fork and a clone?
 - What's the difference between `origin` and `upstream` in this case?
 - What's the benefit to work on new branches like `task/01` and `task/02`, rather than on `master` directly?
-
