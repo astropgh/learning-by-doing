@@ -9,12 +9,24 @@ def extract_data_lines(filename, start_text, end_text):
     open `filename`, and yield the lines between
     the line that contains `start_text` and the line that contains `end_text`
     """
-    # fill in code as needed
+    turn_on = False
     with open(filename) as fh:
-        for line in fh:
-            # fill in code as needed
-            # use `yield line` to return desired lines but keep the function going
+        for i,line in enumerate(fh):
+            if turn_on=='done': break
 
+            if end_text in line:
+                if include_end:
+                    turn_on = 'done'
+                    yield line
+                break
+
+            if turn_on: yield line
+
+            if start_text in line:
+                if include_start:
+                    turn_on = True
+                    yield line
+                turn_on = True
 
 if __name__ == '__main__':
     filename = 'top5names.html'
