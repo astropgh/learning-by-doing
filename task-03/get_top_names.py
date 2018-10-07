@@ -16,7 +16,7 @@ def extract_data_lines(filename, start_text, end_text):
             # use `yield line` to return desired lines but keep the function going
 
 
-if name == '__main__':
+if __name__ == '__main__':
     filename = 'top5names.html'
     start_text = '<tr><td align="center">2017</td>'
     end_text = '</table></center></div><!-- end #content -->'
