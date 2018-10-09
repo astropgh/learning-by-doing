@@ -4,7 +4,13 @@ For astrophg/learning-by-doing: Task 3
 https://github.com/astropgh/learning-by-doing/tree/master/task-03
 """
 
-def extract_data_lines(filename, start_text, end_text):
+def extract_data_lines(
+    filename,
+    start_text,
+    end_text,
+    include_start=False,
+    include_end=False,
+):
     """
     open `filename`, and yield the lines between
     the line that contains `start_text` and the line that contains `end_text`
@@ -16,8 +22,13 @@ def extract_data_lines(filename, start_text, end_text):
 
             if line == start_text:
                 in_table = True
+                if include_start:
+                    yield line
+
             elif line == end_text:
                 in_table = False
+                if include_end:
+                    yield line
 
             if in_table:
                 if line[:4] == '<td>':
