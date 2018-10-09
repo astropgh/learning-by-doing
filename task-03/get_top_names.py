@@ -11,9 +11,17 @@ def extract_data_lines(filename, start_text, end_text):
     """
     # fill in code as needed
     with open(filename) as fh:
+        in_table = False
         for line in fh:
-            if line[:4] == '<td>':
-                yield line
+
+            if line == start_text:
+                in_table = True
+            elif line == end_text:
+                in_table = False
+
+            if in_table:
+                if line[:4] == '<td>':
+                    yield line
 
 
 if __name__ == '__main__':
