@@ -11,21 +11,17 @@ def extract_data_lines(filename, start_text, end_text):
     """
     turn_on = False
     with open(filename) as fh:
-        for i,line in enumerate(fh):
+        for line in fh:
             if turn_on=='done': break
 
             if end_text in line:
-                if include_end:
-                    turn_on = 'done'
-                    yield line
+                if include_end: turn_on = 'done'; yield line
                 break
 
             if turn_on: yield line
 
             if start_text in line:
-                if include_start:
-                    turn_on = True
-                    yield line
+                if include_start: turn_on = True; yield line
                 turn_on = True
 
 if __name__ == '__main__':
