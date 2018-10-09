@@ -21,8 +21,9 @@ def extract_data_lines(filename, start_text, end_text):
             if turn_on: yield line
 
             if start_text in line:
-                if include_start: turn_on = True; yield line
                 turn_on = True
+                if include_start: yield line
+                
 
 if __name__ == '__main__':
     filename = 'top5names.html'
