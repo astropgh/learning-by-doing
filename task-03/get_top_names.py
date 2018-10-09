@@ -12,8 +12,8 @@ def extract_data_lines(filename, start_text, end_text):
     # fill in code as needed
     with open(filename) as fh:
         for line in fh:
-            # fill in code as needed
-            # use `yield line` to return desired lines but keep the function going
+            if line[:4] == '<td>':
+                yield line
 
 
 if __name__ == '__main__':
