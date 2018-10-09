@@ -23,7 +23,7 @@ year, ranking, and gender altogether. A possible way to encode the information i
 ```python
 year = 2017 - index // 10
 rank = index % 5 + 1
-gender = 'female' if index % 10 < 5 else 'male`
+gender = 'female' if index % 10 < 5 else 'male'
 ```
 While this data model preserves all the information, it is unlikely that this
 model will be very convenient when it comes to data exploration.
