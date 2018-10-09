@@ -15,8 +15,8 @@ def extract_data_lines(filename, start_text, end_text):
             if turn_on=='done': break
 
             if end_text in line:
-                if include_end: turn_on = 'done'; yield line
-                break
+                turn_on = 'done'
+                if include_end: yield line
 
             if turn_on: yield line
 
