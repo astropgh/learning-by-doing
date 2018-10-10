@@ -14,17 +14,16 @@ def extract_data_lines(filename, start_text, end_text,
     to_yield = False
     with open(filename) as fh:
         for line in fh:
-            if include_end == True:
-                if to_yield:
-                    yield line
             if end_text in line:
+                if include_end:
+                    yield line
                 break
             if include_start == False:
                 if to_yield:
                     yield line
             if start_text in line:
                 to_yield = True
-            if include_start == True:
+            if include_start:
                 if to_yield:
                     yield line
 
