@@ -10,7 +10,6 @@ def extract_data_lines(filename, start_text, end_text):
     open `filename`, and yield the lines between
     the line that contains `start_text` and the line that contains `end_text`
     """
-    # fill in code as needed
     to_yield = False
     with open(filename) as fh:
         for line in fh:
@@ -20,8 +19,6 @@ def extract_data_lines(filename, start_text, end_text):
                 break
             if to_yield == True:
                 yield line
-            # fill in code as needed
-            # use `yield line` to return desired lines but keep the function going
 
 
 if __name__ == '__main__':
