@@ -29,6 +29,7 @@ def extract_data_lines(
                 in_table = False
                 if include_end:
                     yield line
+                break
 
             if in_table:
                 yield line
