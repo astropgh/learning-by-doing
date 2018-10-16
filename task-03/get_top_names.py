@@ -31,8 +31,7 @@ def extract_data_lines(
                     yield line
 
             if in_table:
-                if line[:4] == '<td>':
-                    yield line
+                yield line
 
 
 if __name__ == '__main__':
