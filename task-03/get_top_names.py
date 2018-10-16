@@ -20,13 +20,12 @@ def extract_data_lines(
         in_table = False
         for line in fh:
 
-            if line.strip() == start_text:
+            if start_text in line:
                 in_table = True
                 if include_start:
                     yield line
 
-            elif line.strip() == end_text:
-                in_table = False
+            elif end_text in line:
                 if include_end:
                     yield line
                 break
