@@ -22,8 +22,6 @@ def extract_data_lines(
 
             if start_text in line:
                 in_table = True
-                if include_start:
-                    yield line
 
             elif end_text in line:
                 if include_end:
@@ -39,5 +37,5 @@ if __name__ == '__main__':
     start_text = '<tr><td align="center">2017</td>'
     end_text = '</table></center></div><!-- end #content -->'
 
-    for line in extract_data_lines(filename, start_text, end_text):
+    for line in extract_data_lines(filename, start_text, end_text, include_start=True):
         print(line)
