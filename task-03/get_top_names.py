@@ -9,11 +9,18 @@ def extract_data_lines(filename, start_text, end_text):
     open `filename`, and yield the lines between
     the line that contains `start_text` and the line that contains `end_text`
     """
-    # fill in code as needed
+    trgr = False
     with open(filename) as fh:
         for line in fh:
-            # fill in code as needed
-            # use `yield line` to return desired lines but keep the function going
+            # print(line)
+            if trgr:
+                if end_text in line:
+                    trgr = False
+                else:
+                    yield line
+            else:
+                if start_text in line:
+                    trgr = True
 
 
 if __name__ == '__main__':
