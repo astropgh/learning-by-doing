@@ -20,3 +20,7 @@
 - What's the difference between a fork and a clone?
 - What's the difference between `origin` and `upstream` in this case?
 - What's the benefit to work on new branches like `task/01` and `task/02`, rather than on `master` directly?
+
+
+# Questions
+- why are my changes not showing up in github. i deleted local repo, re-cloned and had all my changes that aren't in github.
