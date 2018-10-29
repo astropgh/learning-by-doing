@@ -5,7 +5,7 @@ https://github.com/astropgh/learning-by-doing/tree/master/task-07
 """
 
 import pandas as pd
-
+import numpy as np
 
 def extract_data_lines(filename, start_text, end_text,
                        include_start=False, include_end=False):
@@ -43,7 +43,7 @@ if __name__ == '__main__':
 
     for line in data_lines:
         if readyear&('<tr><td align="center">' in line):
-            year = line.replace('<tr><td align="center">', '').replace('</td>\n', '')
+            year = int(line.replace('<tr><td align="center">', '').replace('</td>\n', ''))
             readyear = False
         elif '<tr><td align="center">' not in line:
             line_10_names = line.replace('</td> <td>', ' ').replace("<td>", " ").replace("</td></tr>\n", " ").split()
@@ -59,5 +59,33 @@ if __name__ == '__main__':
     # Add your code for Step 3 here
     # You will use `data` to find and print out the answers for each questions listed in Task 4
 
-    # For example, to answer question 1:
+    print('Q1: Which years Emma is the most chosen names?')
     print(data.query('name == "Emma"').query('rank == 1')['year'].tolist())
+    print('\n')
+
+
+    print('Q2:Which name had been the most chosen name for the longest consecutive years?')
+
+
+    print('\n')
+
+
+    print('Q3:How many unique male names have been on top 5 between years 1980 and 2000?')
+    name_male = np.array(data.query('gender == "male"').query('year >= 1980').query('year <= 2000')['name'].tolist())
+    print(len(np.unique(name_male)))
+    print('\n')
+
+
+    print('Q4:Are there more unique male names or more unique female names that are on top 5?')
+    n_male = len(np.unique(np.array(data.query('gender == "male"')['name'].tolist())))
+    n_female = len(np.unique(np.array(data.query('gender == "female"')['name'].tolist())))
+    if n_female > n_male: print('There are more unique female names.')
+    elif n_male > n_female: print('There are more unique male names.')
+    else: print('There are equal unique names for female and male.')
+    print('\n')
+
+
+    print('Q5:What is the distribution of the numbers of consecutive years that a male name remains the most chosen name?')
+    name_males = np.unique(np.array(data.query('gender == "male"')['name'].tolist()))
+    # years_name = [data.query('name == "{}"'.format(name))['year'].tolist() for name in name_males]
+    print('\n')
