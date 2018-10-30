@@ -6,11 +6,32 @@ https://github.com/astropgh/learning-by-doing/tree/master/task-07
 
 import pandas as pd
 
+
 def extract_data_lines(filename, start_text, end_text, include_start=False, include_end=False):
+    """
+    open `filename`, and yield the lines between
+    the line that contains `start_text` and the line that contains `end_text`
+    """
     # Add your code for Step 1 here
     # Just copy your answer from task-03
     # Remove the raise statement when you are done
-    raise NotImplementedError
+
+    with open(filename) as fh:
+        in_table = False
+        for line in fh:
+
+            if start_text in line:
+                in_table = True
+                if not include_start:
+                    continue
+
+            elif end_text in line:
+                if include_end:
+                    yield line
+                break
+
+            if in_table:
+                yield line
 
 
 if __name__ == '__main__':
