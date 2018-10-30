@@ -65,4 +65,51 @@ if __name__ == '__main__':
     # You will use `data` to find and print out the answers for each questions listed in Task 4
 
     # For example, to answer question 1:
+    # 1. Which years Emma is the most chosen names?
     print(data.query('name == "Emma"').query('rank == 1')['year'].tolist())
+    print(data.query('name == "Emma" and rank == 1')['year'].tolist())
+
+    # 2. Which name had been the most chosen name for the longest consecutive years?
+    male = {'previous': '', 'cnt': 0, 'runs': []}
+    female = {'previous': '', 'cnt': 0, 'runs': []}
+    for __, it in data.query('rank == 1').iterrows():
+        dd = male if it.gender == 'male' else female
+        if it['name'] == dd['previous']:
+            dd['cnt'] += 1
+        else:
+            if dd['previous'] != '':
+                dd['runs'].append((dd['previous'], dd['cnt']))
+            dd['cnt'] = 1
+            dd['previous'] = it['name']
+
+    runs = pd.DataFrame(male['runs'] + female['runs'], columns=['name', 'cnt'])
+    print('Name with the longest run at the top:', runs.name[runs.cnt.idxmax()])
+
+    # 3. How many unique male names have be on top 5 between years 1980 and 2000?
+    print(len(set(data.query('year >= 1980 and year <= 2000 and gender == "male"')['name'])))
+
+    # 4. Are there more unique male names or more unique female names that are on top 5?
+    unique_male_names = len(set(data.query('gender == "male"')['name']))
+    unique_female_names = len(set(data.query('gender == "female"')['name']))
+
+    if unique_male_names > unique_female_names:
+        print('More unique male names.')
+    elif unique_male_names < unique_female_names:
+        print('More unique female names.')
+    else:
+        print('Same number of unique male and female names.')
+
+    # 5. What is the distribution of the numbers of consecutive years that a male name remains the most chosen name?
+    previous = ''
+    count = 0
+    runs = []
+    for it in data.query('gender == "male" and rank == 1')['name']:
+        if it == previous:
+            count += 1
+        else:
+            if previous != '':
+                runs.append(count)
+            count = 1
+            previous = it
+
+    print('Distribution:\n', pd.value_counts(runs))
