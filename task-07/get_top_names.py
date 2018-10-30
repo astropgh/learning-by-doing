@@ -46,6 +46,19 @@ if __name__ == '__main__':
     # This will involve a for loop that iterates over `data_lines`
     # For each row, you will append a tuple to `records`
 
+    # '<tr><td align="center">2017</td>\n'
+    # '<td>Emma</td> <td>Olivia</td> <td>Ava</td> <td>Isabella</td> <td>Sophia</td> <td>Liam</td> <td>Noah</td> <td>William</td> <td>James</td> <td>Logan</td></tr>\n'
+
+    for line in data_lines:
+        if 'align="center"' in line:
+            year = int(line.strip().split('<tr><td align="center">')[1].split('</td>')[0])
+        else:
+            names = [it.split('</td>')[0] for it in line.strip().split('<td>')[1:]]
+            for ii, name in enumerate(names):
+                rank = (ii % 5) + 1
+                gender = 'female' if ii < 5 else 'male'
+                records.append((year, gender, rank, name))
+
     data = pd.DataFrame.from_records(records, columns=['year', 'gender', 'rank', 'name'])
 
     # Add your code for Step 3 here
