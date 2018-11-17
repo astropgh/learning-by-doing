@@ -32,16 +32,14 @@ class NameRecorder:
         self.records = []
         self.year = None
 
-    def add(self, name, is_female, rank):
+    def add(self, name, is_female=None, rank=None):
         if self.year is None:
             raise ValueError('One must set year first')
-
-        # complete this member function
-        raise NotImplementedError
+        else:
+            self.records.append((self.year, is_female, rank, name))
 
     def to_pandas(self):
-        # complete this member function
-        raise NotImplementedError
+        return pd.DataFrame.from_records(self.records, columns=['year', 'gender', 'rank', 'name'])
 
     def clear(self):
         self.records.clear()
