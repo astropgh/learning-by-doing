@@ -5,6 +5,7 @@ https://github.com/astropgh/learning-by-doing/tree/master/task-09
 """
 
 import pandas as pd
+import sqlite3
 
 def extract_data_lines(filename, start_text, end_text, include_start=False,
                        include_end=False):
@@ -31,17 +32,56 @@ class NameRecorder:
     def __init__(self):
         self.records = []
         self.year = None
+        
 
     def add(self, name, is_female, rank):
+        
+        
         if self.year is None:
+            
             raise ValueError('One must set year first')
+            
+            
+        if is_female:
+            
+            self.gender = 'Female'
+            
+        else:
+            
+            self.gender = 'Male'
 
-        # complete this member function
-        raise NotImplementedError
+        
+        self.records.append((self.year, self.gender, rank, name))
+        
 
     def to_pandas(self):
-        # complete this member function
-        raise NotImplementedError
+        
+        if self.records == []:
+            
+            raise ValueError('Empty data base')
+        
+        return pd.DataFrame.from_records(self.records, columns=['year', 'gender', 'rank', 'name'])
+    
+    
+    def to_sql(self, filename = None):
+        
+        # https://www.dataquest.io/blog/python-pandas-databases/
+        # Check output by typing:
+        # recorder.to_sql("names")
+        # import sqlite3
+        # conn = sqlite3.connect("names.db")
+        # pd.read_sql_query("select * from names;", conn)
+        
+        if filename is None:
+            
+            raise ValueError('Please, insert file name')
+            
+        else: # From pandas to SQL
+        
+            conn = sqlite3.connect("%s.db" % (filename))
+            df = recorder.to_pandas()
+            return df.to_sql(filename, conn, if_exists="replace")
+        
 
     def clear(self):
         self.records.clear()
