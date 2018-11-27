@@ -5,6 +5,7 @@ https://github.com/astropgh/learning-by-doing/tree/master/task-09
 """
 import numpy as np
 import pandas as pd
+from sqlalchemy import create_engine
 
 def extract_data_lines(filename, start_text, end_text, include_start=False,
                        include_end=False):
@@ -42,6 +43,9 @@ class NameRecorder:
     def to_pandas(self):
         return pd.DataFrame.from_records(self.records, columns=['year', 'gender', 'rank', 'name'])
 
+    def to_sql(self,filename):
+        pd.DataFrame.from_records(self.records, columns=['year', 'gender', 'rank', 'name']).to_sql(filename,engine)
+        
     def clear(self):
         self.records.clear()
         self.year = None
@@ -66,3 +70,7 @@ if __name__ == '__main__':
     data = recorder.to_pandas()
 
     print(data.query('name == "Emma"').query('rank == 1')['year'].tolist())
+    
+    engine = create_engine('sqlite://', echo=False)
+    recorder.to_sql('testsql')
+    print(engine.execute("SELECT * FROM testsql").fetchall())
