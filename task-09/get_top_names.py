@@ -32,20 +32,27 @@ class NameRecorder:
         self.records = []
         self.year = None
 
-    def add(self, name, is_female, rank):
+    def add(self, name, is_female=None, rank=None):
         if self.year is None:
             raise ValueError('One must set year first')
-
-        # complete this member function
-        raise NotImplementedError
+        else:
+            self.records.append((self.year, is_female, rank, name))
 
     def to_pandas(self):
-        # complete this member function
-        raise NotImplementedError
+        return pd.DataFrame.from_records(self.records, columns=['year', 'gender', 'rank', 'name'])
 
     def clear(self):
         self.records.clear()
         self.year = None
+
+    def to_sql(self, filename=None):
+        if filename is None:
+            raise ValueError('One must set a filename!')
+        else:
+            with open(filename, 'w') as file:
+                file.write('year  gender  rank  name\n')
+                for raw in self.records:
+                    file.write("%s  %s  %s     %s\n" %(raw[0], 'female' if raw[1] else 'male  ', raw[2], raw[3]))
 
 
 if __name__ == '__main__':
@@ -65,5 +72,7 @@ if __name__ == '__main__':
             recorder.year = int(data_line.replace('<tr><td align="center">', '').strip()[:4])
 
     data = recorder.to_pandas()
+
+    recorder.to_sql('to_sql.txt')
 
     print(data.query('name == "Emma"').query('rank == 1')['year'].tolist())
