@@ -3,8 +3,9 @@ get_top_names.py
 For astrophg/learning-by-doing: Task 9
 https://github.com/astropgh/learning-by-doing/tree/master/task-09
 """
-
+import numpy as np
 import pandas as pd
+from sqlalchemy import create_engine
 
 def extract_data_lines(filename, start_text, end_text, include_start=False,
                        include_end=False):
@@ -35,14 +36,16 @@ class NameRecorder:
     def add(self, name, is_female, rank):
         if self.year is None:
             raise ValueError('One must set year first')
-
-        # complete this member function
-        raise NotImplementedError
+        else:
+            self.records.append((self.year, 'female' if is_female else 'male', rank, name))
+            
 
     def to_pandas(self):
-        # complete this member function
-        raise NotImplementedError
+        return pd.DataFrame.from_records(self.records, columns=['year', 'gender', 'rank', 'name'])
 
+    def to_sql(self,filename):
+        pd.DataFrame.from_records(self.records, columns=['year', 'gender', 'rank', 'name']).to_sql(filename,engine)
+        
     def clear(self):
         self.records.clear()
         self.year = None
@@ -67,3 +70,7 @@ if __name__ == '__main__':
     data = recorder.to_pandas()
 
     print(data.query('name == "Emma"').query('rank == 1')['year'].tolist())
+    
+    engine = create_engine('sqlite://', echo=False)
+    recorder.to_sql('testsql')
+    print(engine.execute("SELECT * FROM testsql").fetchall())
