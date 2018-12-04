@@ -35,15 +35,23 @@ meaningful message.
 ```python
 recorder = NameRecorder()
 for i, data_line in enumerate(data_lines):
-    if i % 2:
-        names = data_line.replace('<td>', ' ').replace('</td>', ' ').replace('</tr>', ' ').strip().split()
-        # add some code here to conduct a check.
-        # if the check fails, and raise an RuntimeError with meaningful message
-        for j, name in enumerate(names):
-            recorder.add(name, is_female=(j < 5), rank=(j % 5 + 1))
-    else:
-        try:
+    try:
+        if i % 2:
+            names = data_line.replace('<td>', ' ').replace('</td>', ' ').replace('</tr>', ' ').strip().split()
+            assert(len(names) == 10), "There are not 10 names in the line."
+            for j, name in enumerate(names):
+                recorder.add(name, is_female=(j < 5), rank=(j % 5 + 1))
+        else:
             recorder.year = int(data_line.replace('<tr><td align="center">', '').strip()[:4])]
+            assert(len(recorder.year) == 4), "Year is not 4 digits"
+
+    except TypeError:
+        print("TypeError raised. Check that year is an integer.")
+        break
+    except AssertionError as error:
+        print(error)
+        break
+
         # finish the try-except statement to conduct a check.
         # if the check fails, raise an RuntimeError with meaningful message
 data = recorder.to_pandas()
